@@ -3,34 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="맘대로 만든 컨텐츠를 확인하던지">
-    <title>Document</title>
+    <meta name="description">
+    <title>ETC</title>
 </head>
 <body>
-    &copy dddd;
+    &copy;
     &lt;
     &quot;
 
-    <iframe src="/01.html/step05_form.html" frameborder="5">
-        frameborder="5"
-        width="100"
-        sandbox="allow-forms">
+    <iframe src="/01.html/step05_form.html" 
+            frameborder="5"
+            width="100px"
+            sandbox="allow-forms">
     </iframe>
 
     <hr>
 
-    <video width="500px" 
+    <video width="500px"
+            muted
             controls
             autoplay
             loop
-            poster="">
-            <source src="F:/data/systems/20250323ri.bi.mp4"
-                    type="">
-                
+            poster=""
+            id="video-num1"
+            data-id="1000001101023023">
+        <source src="https://cdn.pixabay.com/video/2023/01/30/148594-794221537_large.mp4"
+                type="video/mp4">
     </video>
 
+    <script>
+        const video = document.getElementById('video-num1');
+        console.log(video.dataset.id)
 
 
-    
+    </script>
+
 </body>
 </html>

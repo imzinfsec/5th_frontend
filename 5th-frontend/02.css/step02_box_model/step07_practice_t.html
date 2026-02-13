@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            background-color: gold;
+        }
+        div.login-form {
+            background-color: lightgray;
+            width: 300px;
+            padding: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        div.login-form form input.text-field {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 10px;
+                border-radius: 6px;
+                border: 0px solid black;
+
+        }
+        div.login-form form input.submit-btn {
+            width: 100%;
+            padding: 10px;
+            color: white;
+            background-color: yellowgreen;
+            border-radius: 6px;
+            border: 0px solid;
+        }
+        div.login-form form input.submit-btnh {
+            width: 100px;
+            height: 10px;
+            visibility: hidden
+        }
+
+        div.links {
+                text-align: center;
+
+        }
+        div.links a {
+            text-decoration: none;
+            color: gray;
+
+        }
+
+    </style>
+</head>
+<body>
+    <div class="login-form">
+        <form>
+            <input
+                type="text"
+                name="email"
+                class="text-field"
+                placeholder="아이디"
+            />
+            <input
+                type="password"
+                name="password"
+                class="text-field"
+                placeholder="비밀번호"
+            />
+            <input type="submit" value="로그인" class="submit-btn" />
+            <input type="button" value="버튼" class="submit-btnh">
+        </form>
+        <div class="links">
+            <a href="#">비밀번호 찾기</a>
+        </div>
+    </div>
+</body>
+</html>

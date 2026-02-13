@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>New Cats Gallery</title>
+<!-- Tailwind CSS V3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style data-purpose="typography">
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400&display=swap');
+
+    .font-serif-kr {
+      font-family: 'Noto Serif KR', serif;
+    }
+    .font-sans-kr {
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+  </style>
+<style data-purpose="custom-layout">
+    /* Custom styles for elements that need specific control beyond standard Tailwind classes */
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .cat-avatar-container {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+
+    .cat-avatar-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .cat-avatar-container:hover .cat-avatar-image {
+      transform: scale(1.05);
+    }
+
+    /* Decorative line under title */
+    .title-divider {
+      width: 40px;
+      height: 1px;
+      background-color: #d1d5db;
+      margin: 20px auto;
+    }
+
+    /* Navigation Arrow Styling */
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+
+    .nav-arrow:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-[#f9f9f9] text-[#333] font-sans-kr py-16 px-4">
+<!-- BEGIN: MainHeader -->
+<header class="text-center mb-12" data-purpose="gallery-header">
+<p class="text-[#c5a059] font-serif-kr tracking-widest text-sm uppercase mb-2">New Cats</p>
+<h1 class="text-4xl font-serif-kr font-bold text-[#444]">새로운 고양이</h1>
+<div class="title-divider"></div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: GallerySection -->
+<main class="gallery-container">
+<!-- Navigation Arrows -->
+<div class="nav-arrow left-0 -ml-8 md:-ml-12" data-purpose="prev-button">
+<svg fill="none" height="30" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="30">
+<polyline points="15 18 9 12 15 6"></polyline>
+</svg>
+</div>
+<div class="nav-arrow right-0 -mr-8 md:-mr-12" data-purpose="next-button">
+<svg fill="none" height="30" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewbox="0 0 24 24" width="30">
+<polyline points="9 18 15 12 9 6"></polyline>
+</svg>
+</div>
+<!-- Cat Grid -->
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-10" data-purpose="cat-grid">
+<!-- Cat Item 1 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="브리티쉬숏헤어 푸우" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANpa6EPIGMknNIAEMAZldu08vj8dLumDCHhm0MP4VmgPq5OjhUhUPA8yVaOIEYneZMnsE7iShdrnjMKt56xiO3tAe3xCFZvAvBRFyIeeh8_nRaLMAsy-h7eWpQPr6ZglYSkkeIJaGP1uUCPVHWYJHOi05FW3b0pAImnA0kF_FAf_PjDwtsVDiUm1bqNsvkMBXDxrOIFh4Z7sFaVIZR9rpZdiZ2eXQKy4q_uzHo6FqLmqpVud2Zi92r0lir64gXpYBhl3sEAGrXLA"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">브리티쉬숏헤어</span> | 푸우
+        </p>
+</div>
+<!-- Cat Item 2 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="브리티쉬숏헤어 앙쥬" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_8mOfaB25WxZk44rS_PTwa3Cu25143S4yPZR-YoKZblanqS-eV867EgLhs-fEAoTfK8xNxxNtVuXXdvwDulbi5kGJuViIm39Ssd05TFLa7NHOkP8duqnWkJ0SPXUKz5ySueZfT5Ql8gU2htAwhkjrRFiHA7uzsEinEHaOTq6EOqFVSR7Z_XnOBDKqZmJ4f0lzRLELOAnces3a8OS0YROV6T2jI9_aqLckd3qEaIUpfh9zm0UxjkHSIDjH3rrcyk0Y6LIuqTQQKw"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">브리티쉬숏헤어</span> | 앙쥬
+        </p>
+</div>
+<!-- Cat Item 3 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="메인쿤 테토" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1D6oJVrNBMpMa4K9EXQPOwdQ0gIIivBIjKRsYu0oFfFP30rs3gY0192pitftTedlGSRMcwAzilz4ACi3HoYEUXUX4gEgyMpie46y0PO-Bp3U-opBhOqwNpc7PxMlP6eougNgsJ4KsKXddSk6G-yN1zqfJfjO8TyHkhrhpiYLx3q1rh2yiLAzgYha8rWxdYtZMU2XXRd9UkGSMLci9P4lm49wuECjR3RnGaQBzDo9fADy_Rw88DdBoLiGRJowl33hXr1pSl3W4Ew"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">메인쿤</span> | 테토
+        </p>
+</div>
+<!-- Cat Item 4 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="노르웨이숲 티니 &amp; 위니" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWvijtUmvCt23NXcBS7YbrqZyhY42njXnm4usFAXJ-3DarH0kxsP1M9ZlnZTxanN78fJOXyZhF_0BdA28XdRNpzfk99JqmMOk0y7ZqhOa-f2n_jTnPdDigs6x6oPWsfNmXtqBE2E_bRsxIxAF9QC1illQR6uNRRyPRLdg45um0WXHn1u3AwkZu7WWAkVyN8ft-9a9v18Xt98cpD0e1rqBBDs7TDgfzFTwR79uy9ac6VuWQ_YsOJ-up7rmcnzMtLElLa2g3O3Mb_w"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">노르웨이숲</span> | 티니 &amp; 위니
+        </p>
+</div>
+<!-- Cat Item 5 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="브리티쉬 먼치킨 밤토리" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcNgjIXAUZaxGsvVEZoJ7wOJzHEOLp_X6RhmN30uv3L_RcWllSMrrP9qUHRzHm3h6jscPkSqMju0WjkzI1GwUYv5_PwDgO2NF1x5tkMszVANj8bwabEsTAn2tHoy3N_pH9XBHgYnUiCzuFhOPdVPf4FiGXsBH01aWF1joJJSkmsyxOoqoToBZgdr7IOPlBJmEAW4n6OchPXZZBSbDs_MnUiiK5i4wzEte5TLIWAB0GH4e-_N-p3G9J9B8I18ddpWLfpFu3XzM2Ng"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">브리티쉬 먼치킨</span> | 밤토리
+        </p>
+</div>
+<!-- Cat Item 6 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="노르웨이숲 유부" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1K_KfwQnMe0xDZs6oRgxrHeBGd9AloGs-mKpsn037lrtLljn37NeTwJiKszr1IFbqyhAWq4z3mUFPR5IIwkBIKqi9h1G2pSlLp6vpvbVR-aN0OxilcNmTELY7KCviMUm12UrbtvlJNdgn17fteWJRJ4EYoYARUCUta_tptIYoBM2dCDO_b5eo0CT2mvQa4h4d5oyOBhaJ1C_zO1blSV3sI7zTR8ctWZjlKzO9ZyOdo0S-FudIxEBiyRXK-MtborADLJ78fFKfIw"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">노르웨이숲</span> | 유부
+        </p>
+</div>
+<!-- Cat Item 7 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="데본렉스 백야" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhow_44mG6fw1isS8pqqKf1VBv17ZNs4P2AEetarrDas40jlOHwqM8KWB9my23KKlUV7lf-BTv3ppQnbl5bKceG4A3NavapXqxD-ns_uY6U1rZLueQgEG-Yo5qUaNk-4BdixqVtmfNIxTOU9azaWNJJATvVqjzmN7fZnv-MDQcgLQSB4e2l3RSqjnzcGdTVBn6sMnDQObw23JfoH61BzJhaQnF22PKXmJmHEiqCzCjfMiwaK6id4lSizfqGy4Y_8k6eXijLry_wA"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">데본렉스</span> | 백야
+        </p>
+</div>
+<!-- Cat Item 8 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="브리티쉬 먼치킨 또또" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUV82Bl4R-FL6f1_iPh6_BjgUyghqRPuIQmY5_PvR6Xx9QQeQNdBjzf2PFNydD5itKwhylsFRxcdd4_PqR-iYMOTz5VZDnkGK694K0Ct5wZg6PcJOqsrBujN6NQGcMD5j40v1uiluR02gtIx-t5d-F4zEoMN9qquOIX6GJwKulOC57k_zZKPOQgFdwkVrmGrCfneqren6YQRPlXHBXTm_nP0G2WyOgykjOEjtIwm0A4oNf_AgRLStPXEP6VFQyL_oh4LB_rcv3Gg"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">브리티쉬 먼치킨</span> | 또또
+        </p>
+</div>
+<!-- Cat Item 9 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="브리티쉬 먼치킨 쁘띠" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0pGvlWXYv33quCEzy_BjRIPG6EV_0H6mfgYlZuUJpLtITJbC0YK66jboIDXtFcx0aP42U1N23XeevLbIQNLyS5nhyZRCXHeDawcRAr_X7iwoFm5nys4bDy5eOJrsDnyY8KfUkqbUFQelIfMyLxXxVJmtE4mxokQC99K7MEIkrnszwFCNBHqjB385qotIkaK3Z6NkqbU2HvAdbZmb6DwdKnRW-a6-W89G3OsljkSCQstJ4WCNQI68dAo_3zYCa0MNWvWU24JMIYg"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">브리티쉬 먼치킨</span> | 쁘띠
+        </p>
+</div>
+<!-- Cat Item 10 -->
+<div class="text-center" data-purpose="cat-card">
+<div class="cat-avatar-container mb-4 shadow-sm">
+<img alt="브리티쉬 먼치킨 비지" class="cat-avatar-image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9EvM8rms5PUOMil78E7ad6pgri4aW8lV6gGd59wNKNeyg90aPanngVRghLFES9mdyDl-i-wwKAiybokIQ2TK_MKZuvD5UFbBUb3vvjiPD61cBWLNS6MBFqUnpiq11ZVT0bikGRabBlCdl_mC2VoWHmu59X1AG3ugr_jrrlwJtdzIN5ZKjesLL8dHPcI--XvlLw6LFsSFS2B6Bjy4WcGjwgMCAeMr2L5VAOfe2lRlIiEDrVXfv1_KvlKAsg3VIRhloBCHlPkN6kg"/>
+</div>
+<p class="text-[13px] text-[#777] font-light">
+<span class="font-normal">브리티쉬 먼치킨</span> | 비지
+        </p>
+</div>
+</div>
+</main>
+<!-- END: GallerySection -->
+</body></html>

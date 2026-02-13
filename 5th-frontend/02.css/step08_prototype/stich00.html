@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html data-version="final" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>천상의 연대기 - 캐릭터 선택</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts for better typography -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<!-- BEGIN: Custom Styling -->
+<style data-purpose="layout">
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #0f172a;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    /* Background image with overlay */
+    .rpg-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(30, 27, 75, 0.8) 0%, rgba(88, 28, 135, 0.8) 100%), 
+                  url('{{DATA:IMAGE:IMAGE_7}}');
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+    }
+
+    /* Character Selection Logic using Radio Buttons (CSS-only) */
+    .char-radio { display: none; }
+
+    /* Container for layout */
+    .main-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Selection Card Styling */
+    .char-card {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      position: relative;
+    }
+    
+    .char-card:hover {
+      transform: scale(1.05);
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    /* Selection indicator */
+    #tanker-select:checked ~ .content-wrapper .card-tanker,
+    #warrior-select:checked ~ .content-wrapper .card-warrior,
+    #mage-select:checked ~ .content-wrapper .card-mage,
+    #healer-select:checked ~ .content-wrapper .card-healer {
+      border-color: #fbbf24;
+      background: rgba(212, 175, 55, 0.2);
+      box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+    }
+
+    /* Detail View Visibility Logic */
+    .detail-view {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    #tanker-select:checked ~ .content-wrapper #detail-tanker,
+    #warrior-select:checked ~ .content-wrapper #detail-warrior,
+    #mage-select:checked ~ .content-wrapper #detail-mage,
+    #healer-select:checked ~ .content-wrapper #detail-healer {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* Stat Bar Animation */
+    @keyframes fillBar {
+      from { width: 0; }
+    }
+    .stat-bar-fill {
+      animation: fillBar 1s ease-out forwards;
+    }
+
+    /* Golden Glow Text */
+    .text-glow-gold {
+      text-shadow: 0 0 8px rgba(251, 191, 36, 0.8);
+    }
+
+    /* Custom Scrollbar for list */
+    .custom-scroll::-webkit-scrollbar { width: 4px; }
+    .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
+  </style>
+<!-- END: Custom Styling -->
+</head>
+<body>
+<!-- BEGIN: Background Layer -->
+<div class="rpg-background"></div>
+<!-- END: Background Layer -->
+<div class="main-container">
+<!-- BEGIN: Character Selection Root -->
+<div class="w-full max-w-6xl relative">
+<!-- Radio Inputs for selection state -->
+<input checked="" class="char-radio" id="tanker-select" name="char-select" type="radio"/>
+<input class="char-radio" id="warrior-select" name="char-select" type="radio"/>
+<input class="char-radio" id="mage-select" name="char-select" type="radio"/>
+<input class="char-radio" id="healer-select" name="char-select" type="radio"/>
+<!-- BEGIN: Main Layout Wrapper -->
+<div class="content-wrapper flex flex-col lg:flex-row gap-8 items-stretch">
+<!-- BEGIN: Left Sidebar (Character List) -->
+<aside class="lg:w-1/3 flex flex-col gap-4">
+<header class="mb-4">
+<h1 class="text-4xl font-bold text-amber-400 text-glow-gold tracking-widest">직업 선택</h1>
+<p class="text-slate-400 mt-2">운명을 결정할 영웅을 선택하십시오</p>
+</header>
+<div class="flex flex-col gap-4 custom-scroll overflow-y-auto pr-2" data-purpose="character-list">
+<!-- Tanker Selection Card -->
+<label class="char-card glass-panel card-tanker p-4 flex items-center gap-4 rounded-lg" for="tanker-select">
+<img alt="Tanker" class="w-20 h-20 rounded-full border-2 border-amber-500/50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0Gb0-xiAunMX-t7NK-w4Zww3I0Y7ZEuyyvk62ZvBdCKhluZ_aUavHuV2UjEUCu9pvanoNQYgSVI3BYInzSrGi20F78qno7nHf-APmi0Sa5a5EpI1kAh1igFXaH0sUwWUy1_9OyL22s7vigM7m7pwpNYUilkAqA1vHLsS26fGoFMGvL7NXvqNg8zWaoO9YVXLAcEclEOr_D5Xu53XN2-6ihQbzVVcCTj_8mNzHEpOJ_FZLz92hwYpjuqf7fnHCxPAGrkb6ITzC7A"/>
+<div>
+<h3 class="text-xl font-bold text-slate-100">수호자 (Tanker)</h3>
+<p class="text-sm text-slate-400">철벽의 방어와 생존력</p>
+</div>
+</label>
+<!-- Warrior Selection Card -->
+<label class="char-card glass-panel card-warrior p-4 flex items-center gap-4 rounded-lg" for="warrior-select">
+<img alt="Warrior" class="w-20 h-20 rounded-full border-2 border-amber-500/50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDx3CCxN-tvcu4sevBAqPpkt0m98OGK2d2g_onhZJ-whgeHFSE7qraJrqVnrYmhXIwKWFL7A8K5ZCRpl_9w0a2Jn0VmEcW3F-LDrKwhEvwz8LlQu6Qer-gd8rZ-ewjv6Ou0lS34RAKnGsOpg4UATMt049awd0qoV6ZrQlLOPhqZUYzrbSxGNYCx-rydObZw59j7bSO9CtUDSgzTWBRwTe5P5OR84EpvDyi7K2oP9SQTrtzppBxPhRMH9EvNASpCW5IGN3n9a1lSxQ"/>
+<div>
+<h3 class="text-xl font-bold text-slate-100">검사 (Warrior)</h3>
+<p class="text-sm text-slate-400">균형 잡힌 공방의 조화</p>
+</div>
+</label>
+<!-- Mage Selection Card -->
+<label class="char-card glass-panel card-mage p-4 flex items-center gap-4 rounded-lg" for="mage-select">
+<img alt="Mage" class="w-20 h-20 rounded-full border-2 border-amber-500/50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAx9iblXGZDg8YyCP48mdsgdifEFIWhODS0gQ75wN9PD8gAcoAjTdfcwEG3YKdWGTC0xjJajWKssJE7OAEtzjb0O6LZwdpmXYC-hy4ROEMPASny_2d9XhbmZbRfxOqhYBi8EGCxSJu0RW_ls_p8AzsfgAERcEiU4PBRAeKzRbU2crpsmuRmB_HkdR4IDXQEyauxdVcBnDReSvNNaTFZu_qcurAzO3JPaiAhGefw7_WvsoUJAivZ1c_haXAazAnwTZmEel_I5g3RA"/>
+<div>
+<h3 class="text-xl font-bold text-slate-100">마도사 (Mage)</h3>
+<p class="text-sm text-slate-400">강력한 광역 마법 공격</p>
+</div>
+</label>
+<!-- Healer Selection Card -->
+<label class="char-card glass-panel card-healer p-4 flex items-center gap-4 rounded-lg" for="healer-select">
+<img alt="Healer" class="w-20 h-20 rounded-full border-2 border-amber-500/50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxUVz1KTNaDJ9EXMSWOHIwmHUndxAgPdvr_e-hDv0UiNcwePgl6ap1CQI5akk_3tMe1u-vW3Qto4RQCSmWHIJkh_-vz4eirRd40vqE8UiUqccjns7796Y23A1OSPnPzYOVPSBJ0l8GL6kJdL_hBhxW_RVSz67duCsxWoVyqxYhJ3SeZ100k8JOVItkhdl3GPP7PhQu9NRujiF0S_C_cFoRdojiJst50dKR9OXax33McBfmvn-WxrlwWcMB510OYWRynXsbfdz5HA"/>
+<div>
+<h3 class="text-xl font-bold text-slate-100">무녀 (Healer)</h3>
+<p class="text-sm text-slate-400">치유와 축복의 조력자</p>
+</div>
+</label>
+</div>
+</aside>
+<!-- END: Left Sidebar -->
+<!-- BEGIN: Right Content (Detailed View) -->
+<main class="lg:w-2/3 glass-panel rounded-2xl p-8 flex flex-col relative overflow-hidden" data-purpose="detail-container">
+<!-- Decorative Corners -->
+<div class="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-amber-500/40 m-2"></div>
+<div class="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-amber-500/40 m-2"></div>
+<!-- TANKER DETAIL -->
+<div class="detail-view flex-col md:flex-row gap-8 items-center h-full" id="detail-tanker">
+<div class="md:w-1/2 flex justify-center">
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-amber-600 to-yellow-400 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+<img alt="Tanker" class="relative rounded-lg shadow-2xl w-full max-w-[350px]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBix9W-HjaHEzmSkwhOZli9YnTn5E6_s1KkkUHZ7REDLJyvShYuLtISpQhdvVY-rspYLydt75z1_RA-W_mSojU1XC0AmyNSilTTejDlpxOIuDBikZVX2W_LPxtHdBje44rnuGs3-_TCygvFQ9ap-SQEo4_4bsTBTPxzFF78CiV5AgW24-r6YACmsgcN85Gb8q7g-6eljY93CjQ5dsqNJN5olJGt9T60ZTSmTzdXzh5-BCArynjz9kRKZghsKLrUl156Asx5S3HAeg"/>
+</div>
+</div>
+<div class="md:w-1/2 space-y-6">
+<h2 class="text-5xl font-bold text-amber-400 tracking-tighter text-glow-gold">수호자 <span class="text-2xl text-slate-300 font-light">Guardian</span></h2>
+<div class="bg-amber-900/20 p-4 rounded-lg border border-amber-500/30">
+<p class="text-lg leading-relaxed text-slate-200 italic">"나의 방패는 결코 무너지지 않는다. 동료들의 안전이 나의 유일한 사명이다."</p>
+</div>
+<div class="space-y-4" data-purpose="stats">
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">힘 (STR)</span><span>95</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-amber-500 h-2.5 rounded-full" style="width: 79%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">덱스 (DEX)</span><span>45</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-amber-500 h-2.5 rounded-full" style="width: 37%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">체력 (STA)</span><span>120</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-amber-500 h-2.5 rounded-full" style="width: 100%"></div></div>
+</div>
+</div>
+<div class="pt-4">
+<h4 class="text-amber-400 font-bold mb-2">특징 (Features)</h4>
+<ul class="text-slate-300 list-disc list-inside space-y-1">
+<li>최강의 방어력과 생존 능력</li>
+<li>거대한 문양 방패를 이용한 아군 보호</li>
+<li>전장의 최전선에서 적의 공격을 흡수</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- WARRIOR DETAIL -->
+<div class="detail-view flex-col md:flex-row gap-8 items-center h-full" id="detail-warrior">
+<div class="md:w-1/2 flex justify-center">
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-amber-400 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+<img alt="Warrior" class="relative rounded-lg shadow-2xl w-full max-w-[350px]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKuoefV7p_grojKi7K_3aGUHeReO5ynWSle2VL07PpPLIFR14nxpwfWvbrEvpXLQ_aAk_ukbSU4Jmi-hLpZysA9sjaGi-gHcm15c6NrdV0nsD1-ku_IVYd0CoR_H3nJiExV_QD4MXalf04gnPyU9XCL2Damipul9iecZJlGJsr53ljXuiXy-ayiwXkdj_3vkucife2JyrjVN-pbVs7YFnd7PRzTy5Iyyzg7am4djeyKiORcNUqSFYNHxubsPG6wSyIguU38ZVoeQ"/>
+</div>
+</div>
+<div class="md:w-1/2 space-y-6">
+<h2 class="text-5xl font-bold text-amber-400 tracking-tighter text-glow-gold">검사 <span class="text-2xl text-slate-300 font-light">Vanquisher</span></h2>
+<div class="bg-amber-900/20 p-4 rounded-lg border border-amber-500/30">
+<p class="text-lg leading-relaxed text-slate-200 italic">"폭풍처럼 휘몰아치는 나의 검끝에 자비란 없다. 오직 승리뿐."</p>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">힘 (STR)</span><span>85</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-amber-500 h-2.5 rounded-full" style="width: 70%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">덱스 (DEX)</span><span>70</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-amber-500 h-2.5 rounded-full" style="width: 58%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">체력 (STA)</span><span>90</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-amber-500 h-2.5 rounded-full" style="width: 75%"></div></div>
+</div>
+</div>
+<div class="pt-4">
+<h4 class="text-amber-400 font-bold mb-2">특징 (Features)</h4>
+<ul class="text-slate-300 list-disc list-inside space-y-1">
+<li>압도적인 물리 타격 능력</li>
+<li>공격과 방어의 완벽한 밸런스</li>
+<li>전장을 가로지르는 신속한 돌진 기술</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- MAGE DETAIL -->
+<div class="detail-view flex-col md:flex-row gap-8 items-center h-full" id="detail-mage">
+<div class="md:w-1/2 flex justify-center">
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-400 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+<img alt="Mage" class="relative rounded-lg shadow-2xl w-full max-w-[350px]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDila0GH_NT5m76VipKKsorr6FjJXJg63UVSzH92S1Yt8RuarW1Olhtsaob_hcKItq8u6jB5pBZcbUoTHMQXqeT_bJ8fvZBCI5EtCwh6medppzwshtPpCTQex3LmsyU9YQtHmHq38pOiT3v30JJspWZ7S-UfruE4Tyu6TmxzeupH8wf8b6xPfdExNbvuMWXIS2SGD32nUT_LUTqyjIf8nYCveZY6ZTtKava1yICaoc1_phEyuBm7OBWYsTsS-bEarVdgLq7mnbVwg"/>
+</div>
+</div>
+<div class="md:w-1/2 space-y-6">
+<h2 class="text-5xl font-bold text-amber-400 tracking-tighter text-glow-gold">마도사 <span class="text-2xl text-slate-300 font-light">Elementalist</span></h2>
+<div class="bg-amber-900/20 p-4 rounded-lg border border-amber-500/30">
+<p class="text-lg leading-relaxed text-slate-200 italic">"우주의 기운이 나의 지팡이 끝에 모인다. 하늘의 심판을 보라."</p>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">지능 (INT)</span><span>110</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-purple-500 h-2.5 rounded-full" style="width: 92%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">덱스 (DEX)</span><span>60</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-purple-500 h-2.5 rounded-full" style="width: 50%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">체력 (STA)</span><span>50</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-purple-500 h-2.5 rounded-full" style="width: 42%"></div></div>
+</div>
+</div>
+<div class="pt-4">
+<h4 class="text-amber-400 font-bold mb-2">특징 (Features)</h4>
+<ul class="text-slate-300 list-disc list-inside space-y-1">
+<li>파괴적인 범위 마법 공격</li>
+<li>원거리에서 적을 제압하는 화력</li>
+<li>신비로운 고대 마법의 정수 활용</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- HEALER DETAIL -->
+<div class="detail-view flex-col md:flex-row gap-8 items-center h-full" id="detail-healer">
+<div class="md:w-1/2 flex justify-center">
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-teal-400 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+<img alt="Healer" class="relative rounded-lg shadow-2xl w-full max-w-[350px]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDaw_mPOyqqK0oCZGJQN8IIFQTeWPUh5xqSkqlWKoQQG-4aXGH_c44UNPwdcFPF4DxizgCoKHBaGSqZE8526jXlzP3T9bbqafXvOnlTu6kXqK8me6Q7CN1q7lQk3SDkijf5PNcSoWfKyZj0cqxGgFnrxyRmDyDGkVKvai9E8dkI0yHqxu0kt-Jj29xBIdfO_xi_TK3RcAkpOn-k3YoBW_4WkVHLs0gfl1qIsZwE0Y9sL6kTtP-hZUWSNaYg6d7RcpPOLvrcKkapzw"/>
+</div>
+</div>
+<div class="md:w-1/2 space-y-6">
+<h2 class="text-5xl font-bold text-amber-400 tracking-tighter text-glow-gold">무녀 <span class="text-2xl text-slate-300 font-light">Celestial</span></h2>
+<div class="bg-amber-900/20 p-4 rounded-lg border border-amber-500/30">
+<p class="text-lg leading-relaxed text-slate-200 italic">"생명의 숨결을 그대에게. 고통은 사라지고 빛이 인도할 것입니다."</p>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">지혜 (WIS)</span><span>100</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-emerald-500 h-2.5 rounded-full" style="width: 83%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">덱스 (DEX)</span><span>50</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-emerald-500 h-2.5 rounded-full" style="width: 42%"></div></div>
+</div>
+<div>
+<div class="flex justify-between mb-1"><span class="text-amber-200">체력 (STA)</span><span>60</span></div>
+<div class="w-full bg-slate-800 rounded-full h-2.5"><div class="stat-bar-fill bg-emerald-500 h-2.5 rounded-full" style="width: 50%"></div></div>
+</div>
+</div>
+<div class="pt-4">
+<h4 class="text-amber-400 font-bold mb-2">특징 (Features)</h4>
+<ul class="text-slate-300 list-disc list-inside space-y-1">
+<li>치유와 정화의 신성한 힘</li>
+<li>아군의 능력을 강화하는 버프 스킬</li>
+<li>파티 생존의 핵심적인 서포트 역할</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Bottom Action -->
+<footer class="mt-auto pt-8 flex justify-end">
+<button class="px-10 py-3 bg-gradient-to-r from-amber-600 to-amber-400 text-slate-900 font-bold rounded-lg shadow-lg hover:brightness-110 active:scale-95 transition-all uppercase tracking-widest">
+              모험 시작하기
+            </button>
+</footer>
+</main>
+<!-- END: Right Content -->
+</div>
+<!-- END: Main Layout Wrapper -->
+</div>
+<!-- END: Character Selection Root -->
+</div>
+<script data-purpose="interaction-logic">
+    // Add small click effect or handle animations reset if needed
+    document.querySelectorAll('.char-card').forEach(card => {
+      card.addEventListener('click', () => {
+        // Reset stat bars animation on click
+        const bars = document.querySelectorAll('.stat-bar-fill');
+        bars.forEach(bar => {
+          bar.style.animation = 'none';
+          bar.offsetHeight; /* trigger reflow */
+          bar.style.animation = null;
+        });
+      });
+    });
+  </script>
+</body></html>

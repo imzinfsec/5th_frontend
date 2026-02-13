@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RPG - Forest Map Exploration</title>
+<!-- Tailwind CSS v3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'rpg-purple': '#1a0b3b',
+            'rpg-gold': '#d4af37',
+            'rpg-gold-bright': '#ffcc33',
+            'rpg-dark-bg': '#0f0721',
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="layout-and-theme">body {
+    background: radial-gradient(circle, #1a0b3b 0%, #0f0721 100%);
+    color: #e2e8f0;
+    font-family: "Pretendard", sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center
+    }
+.map-container {
+    position: relative;
+    border: 4px solid #d4af37;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+    background-color: #1a4d2e;
+    }
+.grid-cell {
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuB_8mY7DoI2PrbWVS611BNhkqGHJmFczlk-Au6g-q5y2riNoYhTOZR3LNPAqaepor7S9-mH-ZwdpDYfXvmmMHdgoeiyMSgBtr9e76Wo1pws6R1CbX1OmrVxAyM9jGmZzWffVzqrkpAFpmVnn-D3U34xcWoWIBsdkBKhYznjUxDIWZb72C7NXaE77AnXXZIeBadvGFRqLBPO90A5hJKfsrOdgNNbMW00Q2uULyhV3M-9dPsAeWvLhgKvwBmYp1P-3Eot-ItDxA4U0Q);
+    transition: background-color 0.2s
+    }
+#character-sprite {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    transition: all 0.15s ease-out;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center
+    }
+.sprite-inner {
+    width: 85%;
+    height: 85%;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDNA6mSEPc-saAOMKFYPiS-F-bVed9l1usiZpfqRo5IiKbv5VDVu-bniWa9B_bpLRte-hTXObWwMXOl2DJiTVbEBfJ9T83VRtAfSlw-rwKm_FJFyr3awDGNJJFH_WGmQ1qgCYT-WIGIeOVzPJ8Yy5SiK0t0vGEcBnVzvMB9DHzYOsSs0SkrsV5dBJM71PC8j65jRLyj8Q5NCygmw3t7C2iAz4gX32hlKPMsA2W8ToUepb2TYp4CriQcvIPuT-cdPukFm3E3nsv88Q);
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    border: 2px solid #ffcc33;
+    box-shadow: 0 0 15px rgba(255, 204, 51, 0.8)
+    }
+.fancy-border {
+    position: relative;
+    border: 1px solid #d4af37
+    }
+.fancy-border::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 15px;
+    height: 15px;
+    border-top: 2px solid #ffcc33;
+    border-left: 2px solid #ffcc33
+    }
+.fancy-border::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 15px;
+    height: 15px;
+    border-bottom: 2px solid #ffcc33;
+    border-right: 2px solid #ffcc33
+    }
+.tile-tree {
+    background-color: #064e3b;
+    position: relative
+    }
+.tile-tree::after {
+    content: "🌲";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    opacity: 0.6
+    }
+.d-pad-btn {
+    background: rgba(26, 11, 59, 0.8);
+    border: 1px solid #d4af37;
+    color: #ffcc33;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px
+    }
+.d-pad-btn:active {
+    background: #ffcc33;
+    color: #1a0b3b
+    }
+.tile-cave {
+    background-color: #3b0764;
+    position: relative
+    }
+.tile-cave::after {
+    content: "🕳️";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5)
+    }</style>
+<!-- END: Custom Styles -->
+</head>
+<body>
+<!-- BEGIN: Game UI Overlay -->
+<div class="fixed top-8 left-8 z-20 flex flex-col gap-4">
+<!-- Character Mini-Profile -->
+<div class="fancy-border bg-rpg-purple/80 p-4 rounded-sm flex items-center gap-4 w-64 backdrop-blur-md" data-purpose="mini-profile">
+<div class="w-16 h-16 rounded-full border-2 border-rpg-gold overflow-hidden bg-black">
+<img alt="Guardian Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNA6mSEPc-saAOMKFYPiS-F-bVed9l1usiZpfqRo5IiKbv5VDVu-bniWa9B_bpLRte-hTXObWwMXOl2DJiTVbEBfJ9T83VRtAfSlw-rwKm_FJFyr3awDGNJJFH_WGmQ1qgCYT-WIGIeOVzPJ8Yy5SiK0t0vGEcBnVzvMB9DHzYOsSs0SkrsV5dBJM71PC8j65jRLyj8Q5NCygmw3t7C2iAz4gX32hlKPMsA2W8ToUepb2TYp4CriQcvIPuT-cdPukFm3E3nsv88Q"/>
+</div>
+<div>
+<h2 class="text-rpg-gold-bright font-bold text-lg leading-tight">수호자 (Guardian)</h2>
+<p class="text-xs text-gray-300">Level 1 Exploration</p>
+<div class="w-full bg-gray-700 h-1 mt-2 rounded-full overflow-hidden">
+<div class="bg-red-500 h-full w-[100%]"></div>
+</div>
+</div>
+</div>
+<!-- Back Button -->
+<button class="bg-black/40 hover:bg-black/60 text-white text-xs px-4 py-2 border border-white/20 rounded self-start transition-colors" onclick="location.href='stich00.html'">
+      ← 캐릭터 선택으로 돌아가기
+    </button>
+</div>
+<!-- END: Game UI Overlay -->
+<!-- BEGIN: Main Map Stage -->
+<main class="relative">
+<div class="map-container grid grid-cols-10 grid-rows-10" data-purpose="exploration-grid" id="game-map">
+<!-- Grid cells will be generated by JS -->
+<div id="character-sprite">
+<div class="sprite-inner"></div>
+</div>
+</div>
+<div class="mt-4 text-center">
+<p class="text-rpg-gold text-sm opacity-70">방향키(↑ ↓ ← →)를 사용하여 숲을 탐험하세요</p>
+</div>
+</main>
+<!-- END: Main Map Stage -->
+<!-- BEGIN: On-Screen Mobile Controls -->
+<div class="fixed bottom-8 right-8 z-20 grid grid-cols-3 gap-2 md:hidden" data-purpose="mobile-controls">
+<div></div>
+<button class="d-pad-btn" onclick="moveCharacter(0, -1)">▲</button>
+<div></div>
+<button class="d-pad-btn" onclick="moveCharacter(-1, 0)">◀</button>
+<button class="d-pad-btn" onclick="moveCharacter(0, 1)">▼</button>
+<button class="d-pad-btn" onclick="moveCharacter(1, 0)">▶</button>
+</div>
+<!-- END: On-Screen Mobile Controls -->
+<!-- BEGIN: Game Logic -->
+<script data-purpose="grid-initialization">
+    const mapSize = 10;
+    const cellSize = 60;
+    const gameMap = document.getElementById('game-map');
+    const caveX = 5;
+    const caveY = 5;
+    
+    // Character State
+    let posX = 0;
+    let posY = 0;
+
+    function initMap() {
+      // Create 100 cells
+      for (let i = 0; i < mapSize * mapSize; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'grid-cell';
+        
+        const row = Math.floor(i / mapSize);
+        const col = i % mapSize;
+
+        // Set Cave Entrance
+        if (row === caveY && col === caveX) {
+          cell.classList.add('tile-cave');
+        } 
+        // Randomly add some trees for visual interest
+        else if (Math.random() > 0.85 && i !== 0) {
+          cell.classList.add('tile-tree');
+        }
+        
+        gameMap.appendChild(cell);
+      }
+      updateCharacterPosition();
+    }
+
+    function updateCharacterPosition() {
+      const sprite = document.getElementById('character-sprite');
+      sprite.style.left = `${posX * cellSize}px`;
+      sprite.style.top = `${posY * cellSize}px`;
+
+      // Check for cave entrance interaction
+      if (posX === caveX && posY === caveY) {
+        setTimeout(() => {
+            window.location.href = 'cave.html';
+        }, 150);
+      }
+    }
+
+    function moveCharacter(dx, dy) {
+      const newX = posX + dx;
+      const newY = posY + dy;
+
+      // Boundary check
+      if (newX >= 0 && newX < mapSize && newY >= 0 && newY < mapSize) {
+        posX = newX;
+        posY = newY;
+        updateCharacterPosition();
+      }
+    }
+
+    // Keyboard Event Listener
+    window.addEventListener('keydown', (e) => {
+      switch(e.key) {
+        case 'ArrowUp':
+          e.preventDefault();
+          moveCharacter(0, -1);
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          moveCharacter(0, 1);
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          moveCharacter(-1, 0);
+          break;
+        case 'ArrowRight':
+          e.preventDefault();
+          moveCharacter(1, 0);
+          break;
+      }
+    });
+
+    // Initialize the game
+    initMap();
+  </script>
+<!-- END: Game Logic -->
+</body></html>
